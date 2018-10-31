@@ -5,7 +5,7 @@
 Summary:	C library for parsing "INI-style" files
 Name:		iniparser
 Version:	3.1
-Release:	3
+Release:	4
 License:	MIT
 Group:		System/Libraries
 Url:		http://ndevilla.free.fr/iniparser/
