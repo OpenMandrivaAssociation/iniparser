@@ -1,15 +1,15 @@
-%define major 0
+%define major 1
 %define libname %mklibname %{name} %{major}
 %define devname %mklibname %{name} -d
 
 Summary:	C library for parsing "INI-style" files
 Name:		iniparser
-Version:	3.1
-Release:	4
+Version:	4.1
+Release:	1
 License:	MIT
 Group:		System/Libraries
 Url:		http://ndevilla.free.fr/iniparser/
-Source0:	http://ndevilla.free.fr/iniparser/%{name}-%{version}.tar.gz
+Source0:	https://github.com/ndevilla/iniparser/archive/v%{version}.tar.gz
 Patch0:		iniparser-3.1-makefile.patch
 
 %description
@@ -37,25 +37,24 @@ documentation for %{name}. If you like to develop programs using %{name},
 you will need to install %{name}-devel.
 
 %prep
-%setup -q -n %{name}
-%patch0 -p1
+%setup -q
 
 %build
 %setup_compile_flags
-%make libiniparser.so
+%make_build
 
 %install
 # iniParser doesn't have a 'make install' of its own :(
 install -d %{buildroot}%{_includedir} %{buildroot}%{_libdir}
 install -m 644 -t %{buildroot}%{_includedir}/ src/dictionary.h src/iniparser.h
-install -m 755 -t %{buildroot}%{_libdir}/ libiniparser.so.0
-ln -s libiniparser.so.0 %{buildroot}%{_libdir}/libiniparser.so
+install -m 755 -t %{buildroot}%{_libdir}/ libiniparser.so.%{major}
+ln -s libiniparser.so.%{major} %{buildroot}%{_libdir}/libiniparser.so
 
 %files -n %{libname}
 %{_libdir}/libiniparser.so.%{major}*
 
 %files -n %{devname}
-%doc README LICENSE
+%doc LICENSE
 %{_libdir}/libiniparser.so
 %{_includedir}/*.h
 
