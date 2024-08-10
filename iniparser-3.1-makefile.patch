@@ -1,30 +1,11 @@
-diff -urN iniparser/Makefile iniparser-patched/Makefile
---- iniparser/Makefile	2012-04-09 01:44:57.000000000 +1100
-+++ iniparser-patched/Makefile	2013-06-29 01:42:33.532672822 +1100
-@@ -4,15 +4,14 @@
- 
- # Compiler settings
- CC      = gcc
--CFLAGS  = -O2 -fPIC -Wall -ansi -pedantic
-+CFLAGS += -fPIC
- 
- # Ar settings to build the library
- AR	    = ar
- ARFLAGS = rcv
+diff -up iniparser-4.2.1/Makefile.1~ iniparser-4.2.1/Makefile
+--- iniparser-4.2.1/Makefile.1~	2024-08-10 16:34:57.897993828 +0200
++++ iniparser-4.2.1/Makefile	2024-08-10 16:35:40.614469842 +0200
+@@ -21,7 +21,6 @@ ARFLAGS = rcv
  
  SHLD = ${CC} ${CFLAGS}
--LDSHFLAGS = -shared -Wl,-Bsymbolic  -Wl,-rpath -Wl,/usr/lib -Wl,-rpath,/usr/lib
--LDFLAGS = -Wl,-rpath -Wl,/usr/lib -Wl,-rpath,/usr/lib
-+LDSHFLAGS = -shared -Wl,-Bsymbolic
+ LDSHFLAGS = -shared -Wl,-Bsymbolic
+-LDFLAGS += -Wl,-rpath -Wl,/usr/lib -Wl,-rpath,/usr/lib
  
- # Set RANLIB to ranlib on systems that require it (Sun OS < 4, Mac OSX)
- # RANLIB  = ranlib
-@@ -28,7 +27,7 @@
- COMPILE.c=$(CC) $(CFLAGS) -c
- .c.o:
- 	@(echo "compiling $< ...")
--	@($(COMPILE.c) -o $@ $<)
-+	$(COMPILE.c) -o $@ $<
- 
- 
- SRCS = src/iniparser.c \
+ # .so.0 is for version 3.x, .so.1 is 4.x
+ SO_TARGET ?= libiniparser.so.1
