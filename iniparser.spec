@@ -1,17 +1,19 @@
-%define major 1
+%define major 4
 %define oldlibname %mklibname %{name} 1
 %define libname %mklibname %{name}
 %define devname %mklibname %{name} -d
 
 Summary:	C library for parsing "INI-style" files
 Name:		iniparser
-Version:	4.2.1
+Version:	4.2.6
 Release:	1
 License:	MIT
 Group:		System/Libraries
 Url:		https://github.com/ndevilla/iniparser
 Source0:	https://github.com/ndevilla/iniparser/archive/v%{version}.tar.gz
-Patch0:		iniparser-3.1-makefile.patch
+#Patch0:		iniparser-3.1-makefile.patch
+
+BuildSystem:	cmake
 
 %description
 iniParser is an ANSI C library to parse "INI-style" files, often used to
@@ -42,21 +44,24 @@ you will need to install %{name}-devel.
 %prep
 %autosetup -p1
 
-%build
-%setup_compile_flags
-%make_build
+#%build
+#%setup_compile_flags
+#%make_build
 
-%install
+#%install
 # iniParser doesn't have a 'make install' of its own :(
-install -d %{buildroot}%{_includedir}/iniparser %{buildroot}%{_libdir}
-install -m 644 -t %{buildroot}%{_includedir}/iniparser/ src/dictionary.h src/iniparser.h
-install -m 755 -t %{buildroot}%{_libdir}/ libiniparser.so.%{major}
-ln -s libiniparser.so.%{major} %{buildroot}%{_libdir}/libiniparser.so
+#install -d %{buildroot}%{_includedir}/iniparser %{buildroot}%{_libdir}
+#install -m 644 -t %{buildroot}%{_includedir}/iniparser/ src/dictionary.h src/iniparser.h
+#install -m 755 -t %{buildroot}%{_libdir}/ libiniparser.so.%{major}
+#ln -s libiniparser.so.%{major} %{buildroot}%{_libdir}/libiniparser.so
 
 %files -n %{libname}
+%doc AUTHORS FAQ*md INSTALL README.md
 %{_libdir}/libiniparser.so.%{major}*
 
 %files -n %{devname}
-%doc LICENSE
+%license LICENSE
 %{_libdir}/libiniparser.so
 %{_includedir}/iniparser
+%{_libdir}/cmake/%{name}
+%{_libdir}/pkgconfig/%{name}.pc
